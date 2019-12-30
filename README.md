@@ -38,7 +38,7 @@ nc localhost 6667
 
 ## Implementation
 
-**Variables**
+#### Variables
 Two global variables were used, `global_users` and `global_channel`, to store all the users who had created an account on the server and what channels exist on the server. We want to store all the accounts created on the server so that the user is able to log back into their account. In addition, by having the two global arrays `global_users` and `global_channel`, it is easier to later use the `NAMES` and `LIST` command to list all the users and channels on the server. To be more precise, it would be better to note if the user is currently connected or not connected (aka logged-out) to the server. 
 
 A `user struct` was created to store all the user information. The `user struct` contains a person's username, nickname, password, and connection ID. To mimic the creation of a user joining the server, you would need to open a new terminal. As a result, each terminal is a new user. Therefore, to distinguish between the users, a unique terminal ID (`conn net.Conn`) will be assigned to each user in the `user struct`. 
@@ -47,7 +47,7 @@ A `channel struct` was created to store all the information pertaining to a chan
 
 A `server struct` was created to store information relating to the server; however, this is not necessary since there is only one server. The port number for the server will be 6667 since IRC typically use transmission control protocol (TCP), a type of acknowledgement system in which the users need to provide information of receiving the message (eg. "Read at 1:43 pm"), as its transport protocol. The TCP port for IRC traffic is 6667.
 
-**Logical Flow**
+#### Logical Flow
 The `tcp` protocol and port number `:6667` was passed into `start_server()` function where `net.Listen()` starts the server. Once the server is running, `server.Accept()` will listen to any incoming users or people who try to login to the server. When the server was accessed by a user, `handle_connection()` function runs to handle the new user and output the server's commands on the user's terminal. A unique connection ID is assigned to the user when the user opens the server. As long as the programming is running, the server will listen into the user's terminal for any written messages/input. When an input is received, the `check_command()` function will run to determine if any of the input is one of the server's pre-defined commands (eg. PASS NICK USER, NICK, etc.). If any of the commands match via checking if the word is in a global string array `commands`, then a respective function will run:
 
 **`PASS NICK USER:`** The server prompts the user to login with their username/password. For simplication purposes, only one chance if given. If the user has an incorrect username/password combination or does not have an account, the server prompts the user to create a new account and type in their username, nickname, and password. The user struct is stored in the `global_users` variable. No other commands will run until the user either logs into their account or creates a new account.
