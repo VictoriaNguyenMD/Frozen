@@ -34,8 +34,6 @@ nc localhost 6667
 
 **HELP:** List the commands the server supports
 
-## Breakdown
-
 ## Implementation
 
 #### Variables
